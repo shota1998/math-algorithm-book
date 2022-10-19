@@ -1,28 +1,21 @@
-from sys import stdin
+N = int(input())
+A = [int(i) for i in input().split()]
 
-N = int(stdin.readline().rstrip())
-A = [int (x) for x in stdin.readline().rstrip().split()]
+def euclid(left, right):
+    remain = 1
 
+    while remain != 0:
+        remain = left % right
+        left = right
+        right = remain
 
-def euclid(numerator, denominator):
-    remainder = 2
+    return left if remain == 0 else 1
 
-    while remainder > 1 or remainder != 0:
-        remainder   = numerator % denominator
-        numerator   = denominator
-        denominator = remainder
-    
-    return numerator if remainder == 0 else 1
-        
+left  = A[0] if A[0] > A[1] else A[1]
+right = A[1] if A[0] > A[1] else A[0]
+remain = euclid(left, right)
 
-def main():
-    numerator   = A[0] if A[0] >= A[1] else A[1] 
-    denominator = A[1] if A[0] >= A[1] else A[0]
-    remainder   = euclid(numerator, denominator)
+for i in range(2, N):
+    remain = euclid(remain, A[i])
 
-    for i in range(2, N):
-        remainder = euclid(remainder, A[i])
-
-    print(remainder)
-
-main()
+print(remain)
